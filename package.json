@@ -1,0 +1,24 @@
+{
+  "author": "Bret K. Ikehara",
+  "license": "BSD",
+  "name": "handlebars-compile-plugin",
+  "version": "0.0.0",
+  "description": "Handlebars plugin for the YUI 3 shifter build tool.",
+  "main": "index.js",
+  "scripts": {
+    "test": "vows --spec tests/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bretkikehara/handlebars-compile-plugin.git"
+  },
+  "dependencies": {
+    "path" : "*",
+    "vows" : "*",
+    "assert" : "*",
+    "glob": "*",
+    "handlebars": "*",
+    "yui-lint": "~0.1.1"
+  },
+  "preferGlobal": "true"
+}
