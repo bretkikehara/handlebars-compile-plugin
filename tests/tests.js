@@ -44,6 +44,11 @@ var vows = require('vows'),
 			},
 			"Write Template": function(topic) {
 				assert.isTrue(topic);
+			},
+			"Check Compiled File Exists": function() {
+				var fileName = 'tests/assets/dir/list.handlebars',
+					fileStat = fs.lstatSync(fileName);
+				assert.isTrue(fileStat.isFile());
 			}
 		}
 	};
