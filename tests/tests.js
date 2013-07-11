@@ -1,3 +1,19 @@
+
+// setup global objects to execute compiled scripts.
+global.Handlebars = {
+	template : function(func) {
+		return func;
+	},
+	partials : {
+
+	}
+};
+global.YUI = {
+	namespace : function() {
+		return {};
+	}
+};
+
 var vows = require('vows'),
 	fs = require('fs'),
 	path = require('path'),
@@ -60,7 +76,7 @@ var vows = require('vows'),
 				assert.isFalse(topic);
 			}
 		},
-		"Write Template": {
+		"Write Handlebars Template": {
 			topic: function() {
 				var file = path.resolve(process.cwd(),'tests/assets/dir/list.handlebars');
 				return compiler.writeTemplate(file, {
@@ -75,6 +91,30 @@ var vows = require('vows'),
 				var fileName = 'tests/assets/dir/list.handlebars',
 					fileStat = fs.lstatSync(fileName);
 				assert.isTrue(fileStat.isFile());
+			},
+			"Check that the file can execute": function() {
+				require('./assets/dir/list.js');
+			}
+		},
+		"Write YUI Template": {
+			topic: function() {
+				var file = path.resolve(process.cwd(),'tests/assets/message.handlebars');
+				return compiler.writeTemplate(file, {
+					extension: 'handlebars',
+					verbose: true,
+					yuiNamespace: 'message'
+				});
+			},
+			"Write Template": function(topic) {
+				assert.isTrue(topic);
+			},
+			"Check Compiled File Exists": function() {
+				var fileName = 'tests/assets/dir/list.handlebars',
+					fileStat = fs.lstatSync(fileName);
+				assert.isTrue(fileStat.isFile());
+			},
+			"Check that the file can execute": function() {
+				require('./assets/message.js');
 			}
 		}
 	};
