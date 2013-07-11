@@ -8,10 +8,11 @@ global.Handlebars = {
 
 	}
 };
-global.YUI = {
+global.Y = {
 	namespace : function() {
 		return {};
-	}
+	},
+	Handlebars : global.Handlebars
 };
 
 var vows = require('vows'),

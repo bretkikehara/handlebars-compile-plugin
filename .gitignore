@@ -1,2 +1,3 @@
 /node_modules/
-/tests/assets/dir/list.js
+/tests/assets/*.js
+/tests/assets/dir/*.js
