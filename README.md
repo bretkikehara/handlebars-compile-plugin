@@ -28,7 +28,7 @@ If no folders are specified, then the compiler will search in the `template` fol
 
 ##### Setup with YUI Shifter
 
-For each YUI module, add the less-compile command to the build.json under the exec option.
+For each YUI module, add the handlebars-compile command to the build.json under the exec option.
 
 ```javascript
 "exec": [

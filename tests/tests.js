@@ -9,19 +9,26 @@ var vows = require('vows'),
 	tests = {
 		"Find templates": {
 			topic: function() {
-				return compiler.findFiles('tests/assets');
+				var file = path.resolve(process.cwd(), 'tests/assets');
+				return compiler.findFiles(file, {
+					extension: 'handlebars',
+					verbose: true
+				});
 			},
 			"Find templates": function(topic) {
 				var expected = {
-					'tests/assets/message.handlebars': false,
-					'tests/assets/dir/list.handlebars': false
+					'message.handlebars': false,
+					'list.handlebars': false
 				};
+
+				assert.equal(topic.length, 2);
 
 				// set all found finds in expected map to true.
 				topic.forEach(function(val) {
+					var file = path.basename(val);
 					// ensures we find expected templates
-					assert.isTrue(expected.hasOwnProperty(val));
-					expected[val] = true;
+					assert.isTrue(expected.hasOwnProperty(file));
+					expected[file] = true;
 				});
 
 				// ensure all values are true.
@@ -30,9 +37,24 @@ var vows = require('vows'),
 				});
 			}
 		},
+		"No templates found": {
+			topic: function() {
+				var file = path.resolve(process.cwd(), 'test');
+				return compiler.findFiles(file, {
+					extension: 'handlebars',
+					verbose: false
+				});
+			},
+			"No templates found": function(topic) {
+				assert.equal(topic.length, 0);
+			}
+		},
 		"Try to write imaginary file": {
 			topic: function() {
-				return compiler.writeTemplate('template.handlebars');
+				return compiler.writeTemplate('template.handlebars', {
+					extension: 'handlebars',
+					verbose: false
+				});
 			},
 			"Try to write imaginary file": function(topic) {
 				assert.isFalse(topic);
@@ -40,7 +62,11 @@ var vows = require('vows'),
 		},
 		"Write Template": {
 			topic: function() {
-				return compiler.writeTemplate('tests/assets/dir/list.handlebars');
+				var file = path.resolve(process.cwd(),'tests/assets/dir/list.handlebars');
+				return compiler.writeTemplate(file, {
+					extension: 'handlebars',
+					verbose: true
+				});
 			},
 			"Write Template": function(topic) {
 				assert.isTrue(topic);
